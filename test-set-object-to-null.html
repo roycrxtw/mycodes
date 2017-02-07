@@ -1,0 +1,52 @@
+<html>
+<head>
+<title>測試物件設為null對於memory usage之效果</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+<h1>測試將物件設為null對於memory usage之效果</h1>
+<div>
+本程式藉由建立大量物件來測試將物件設為null是否可以達成free memory usage之效果.<br/>
+Code中每個物件皆擁有一個長度相當長的string屬性.
+</div>
+</body>
+
+<script>
+
+console.log("測試null之效果");
+
+"use strict";
+
+const N = 300000;				// object count
+var str = createBigString(100000);
+var units = [];					// object array
+
+var Unit = function(){
+	this.data = str;
+};
+
+function createBigString(n){
+	let str = "";
+	let base = "abcdefghijklmnopqrstuvwkyz";
+	for(var i = 0; i < n; i++){
+		str += base + i;
+	}
+	console.log("size of str=" + str.length);
+	return str;
+}
+
+console.log("Create " + N + " objects.");
+for(var i = 0; i < N; i++){
+	units[i] = new Unit();
+}
+
+console.log("Objects created.");
+
+units = null;	// 這行是兩次測試唯一差別
+console.log("Set the entire object array to null.");
+
+</script>
+
+</html>
